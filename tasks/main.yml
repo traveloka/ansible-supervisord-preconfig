@@ -1,11 +1,8 @@
 - block:
-  - name: try running supervisorctl
-    shell: command -v supervisord >/dev/null 2>&1
+  - name: try running supervisord
+    shell: supervisord >/dev/null 2>&1
     register: supervisorctl_call_return
     ignore_errors: yes
-
-  - debug: msg="{{ supervisorctl_call_return.rc }}" # it returns rc 1
-  - debug: var=supervisorctl_call_return
 
   - name: create directory for supervisor log
     file:
@@ -19,7 +16,7 @@
     service:
       name: supervisor
       enabled: false
-    when: supervisorctl_call_return.rc == "0" and supervisord_service_disable
+    when: supervisorctl_call_return.rc != 127 and supervisord_service_disable
 
   become: true
   become_method: sudo
