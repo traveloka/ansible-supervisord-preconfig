@@ -4,3 +4,4 @@ supervisord_app_log_directories: []
 # if you want to use environment variables in supervisor config files, you need to start supervisor yourself
 # because linux services are started with no environment variables, thus supervisor won't recognize them
 supervisord_service_disable: true
+supervisord_run_supervisorctl: false
