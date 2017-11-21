@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: True
+  roles:
+    - role: ansible-supervisord-preconfig
+      supervisord_app_log_directories:
+        - /opt/traveloka/log
+    - role: ansible-supervisord-preconfig
+      supervisord_service_disable: false

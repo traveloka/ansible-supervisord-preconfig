@@ -1,0 +1,25 @@
+- block:
+  - name: try running supervisorctl
+    shell: command -v supervisord >/dev/null 2>&1
+    register: supervisorctl_call_return
+    ignore_errors: yes
+
+  - debug: msg="{{ supervisorctl_call_return.rc }}" # it returns rc 1
+  - debug: var=supervisorctl_call_return
+
+  - name: create directory for supervisor log
+    file:
+      state: directory
+      recurse: yes
+      path: "{{ item }}"
+    when: supervisord_app_log_directories | length > 0
+    with_items: "{{ supervisord_app_log_directories }}"
+
+  - name: Disable supervisor because service start doesn't read env vars
+    service:
+      name: supervisor
+      enabled: false
+    when: supervisorctl_call_return.rc == "0" and supervisord_service_disable
+
+  become: true
+  become_method: sudo
