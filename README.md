@@ -1,4 +1,4 @@
-supervisord_config
+supervisord-preconfig
 =================
 
 ![Build Status](https://travis-ci.org/traveloka/ansible-supervisord-preconfig.svg?branch=master)
