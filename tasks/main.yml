@@ -7,6 +7,9 @@
   - name: create directory for supervisor log
     file:
       state: directory
+      owner: "{{ supervisord_app_user }}"
+      group: "{{ supervisord_app_group }}"
+      mode: "0740"
       recurse: yes
       path: "{{ item }}"
     when: supervisord_app_log_directories | length > 0
