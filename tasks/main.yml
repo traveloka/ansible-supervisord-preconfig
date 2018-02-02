@@ -4,7 +4,7 @@
     register: supervisorctl_call_return
     when: supervisord_run_supervisorctl
 
-  - name: create directory for supervisor log
+  - name: create applications' directory log
     file:
       state: directory
       owner: "{{ supervisord_app_user }}"
@@ -15,7 +15,7 @@
     when: supervisord_app_log_directories | length > 0
     with_items: "{{ supervisord_app_log_directories }}"
 
-  - name: Disable supervisor because service start doesn't read env vars
+  - name: Disable supervisor because service starts don't honor env vars
     service:
       name: supervisor
       enabled: false
